@@ -1,3 +1,13 @@
+# 用法
+```python
+#捕获摄像头中的人脸并识别（预先加载facedb）
+python infer.py
+
+#函数测试
+python test.py
+```
+
+
 # Face Recognition
 
 _You can also read a translated version of this file [in Chinese 简体中文版](https://github.com/ageitgey/face_recognition/blob/master/README_Simplified_Chinese.md)._

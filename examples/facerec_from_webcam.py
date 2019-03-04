@@ -1,5 +1,7 @@
 import face_recognition
 import cv2
+import os
+import sys
 
 # This is a super simple (but slow) example of running face recognition on live video from your webcam.
 # There's a second example that's a little more complicated but runs faster.
@@ -11,6 +13,7 @@ import cv2
 # Get a reference to webcam #0 (the default one)
 video_capture = cv2.VideoCapture(0)
 
+'''
 # Load a sample picture and learn how to recognize it.
 obama_image = face_recognition.load_image_file("obama.jpg")
 obama_face_encoding = face_recognition.face_encodings(obama_image)[0]
@@ -28,6 +31,26 @@ known_face_names = [
     "Barack Obama",
     "Joe Biden"
 ]
+'''
+
+
+# PATH
+CUR_PATH = os.path.dirname(os.path.abspath(__file__))
+
+known_face_encodings, known_face_names = [], []
+facedb_path = CUR_PATH+'/../data/faceid/'
+for img_file in os.listdir(facedb_path):
+    if img_file == '.DS_Store':
+        continue
+    print(facedb_path +  img_file)
+    image = face_recognition.load_image_file(facedb_path +  img_file)
+    emb = face_recognition.face_encodings(image)[0]
+    known_face_encodings.append(emb)
+    #known_face_names.append(img_file.split('.')[0])
+    known_face_names.append(img_file)
+print(known_face_names)
+
+
 
 while True:
     # Grab a single frame of video
@@ -44,6 +67,7 @@ while True:
     for (top, right, bottom, left), face_encoding in zip(face_locations, face_encodings):
         # See if the face is a match for the known face(s)
         matches = face_recognition.compare_faces(known_face_encodings, face_encoding)
+        print(matches)
 
         name = "Unknown"
 
